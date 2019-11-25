@@ -9,6 +9,7 @@ use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
+    //use以后，即可直接使用里面的方法
     use Notifiable, MustVerifyEmailTrait;
 
     protected $fillable = [
