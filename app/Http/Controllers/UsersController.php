@@ -25,6 +25,7 @@ class UsersController extends Controller
 
         $data = $request->all();
 
+        //如果有上传头像，用ImageUploadHandler的$uploader将头像文件上传，并获得上传的路径
         if($request->avatar){
             $result = $uploader->save($request->avatar,'avatars',$user->id);
             if($result){
