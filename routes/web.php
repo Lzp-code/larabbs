@@ -39,3 +39,5 @@ Route::get('/users/{user}', 'UsersController@show')->name('users.show');
 Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
 //Route::post('/users/{user}', 'UsersController@update')->name('users.update');（来自教程，不可用）
 Route::put('/users/{user}', 'UsersController@update')->name('users.update');
+
+Route::resource('topics', 'TopicsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
