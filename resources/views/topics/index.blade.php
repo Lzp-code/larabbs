@@ -15,8 +15,22 @@
 
         <div class="card-header bg-transparent">
           <ul class="nav nav-pills">
-            <li class="nav-item"><a class="nav-link active" href="#">最后回复</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">最新发布</a></li>
+
+
+            {{--Request::url() 获取的是当前请求的 URL，查看页面，--}}
+            {{--通过 Laravel 开发者工具类查看读取列表数据的 SQL 请求，--}}
+            {{--根据 updated_at 字段来排序：--}}
+
+            <li class="nav-item">
+              <a class="nav-link {{ active_class( ! if_query('order', 'recent')) }}" href="{{ Request::url() }}?order=default">
+                最后回复
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ active_class(if_query('order', 'recent')) }}" href="{{ Request::url() }}?order=recent">
+                最新发布
+              </a>
+            </li>
           </ul>
         </div>
 
