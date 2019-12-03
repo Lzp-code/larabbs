@@ -16,3 +16,9 @@ function category_nav_active($category_id){
 //    if_uri_pattern () - 判断当前的 url 是否含有指定的字符；
     return active_class((if_route('categories.show') && if_route_param('category', $category_id)));
 }
+
+
+function make_excerpt($value,$length=200){
+    $excerpt = trim(preg_replace('/\r\n|\r|\n+/', ' ', strip_tags($value)));
+    return Str::limit($excerpt,$length);
+}

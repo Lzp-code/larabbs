@@ -6,21 +6,19 @@ class TopicRequest extends Request
 {
     public function rules()
     {
+//        在这里的写法中， 表单方法 POST, PUT, PATCH 使用的是相同的一套验证规则。
         switch($this->method())
         {
             // CREATE
             case 'POST':
-            {
-                return [
-                    // CREATE ROLES
-                ];
-            }
-            // UPDATE
+                // UPDATE
             case 'PUT':
             case 'PATCH':
             {
                 return [
-                    // UPDATE ROLES
+                    'title'       => 'required|min:2',
+                    'body'        => 'required|min:3',
+                    'category_id' => 'required|numeric',
                 ];
             }
             case 'GET':
@@ -28,14 +26,15 @@ class TopicRequest extends Request
             default:
             {
                 return [];
-            }
+            };
         }
     }
 
     public function messages()
     {
         return [
-            // Validation messages
+            'title.min' => '标题必须至少两个字符',
+            'body.min' => '文章内容必须至少三个字符',
         ];
     }
 }
