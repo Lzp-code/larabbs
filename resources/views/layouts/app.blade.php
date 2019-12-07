@@ -13,7 +13,7 @@
 
     {{--继承此模板的页面，如果没有设置title的话，则title自动设置为LaraBBS--}}
     <title>@yield('title', 'LaraBBS') - Laravel 进阶教程</title>
-
+    <meta name="description" content="@yield('description', 'LaraBBS 爱好者社区')" />
     <!-- Styles 根据webpack.mix.js来生成css链接-->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('styles')
