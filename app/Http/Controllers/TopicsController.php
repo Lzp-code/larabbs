@@ -27,8 +27,17 @@ class TopicsController extends Controller
 		return view('topics.index', compact('topics'));
 	}
 
-    public function show(Topic $topic)
+	public function show(Request $request, Topic $topic)
     {
+		//使show的链接url强制带有topic的slug
+//		我们需要访问用户请求的路由参数 Slug，在 show() 方法中我们注入 $request；
+//		! empty($topic->slug) 如果话题的 Slug 字段不为空；
+//		&& $topic->slug != $request->slug 并且话题 Slug 不等于请求的路由参数 Slug；
+//		redirect($topic->link(), 301) 301 永久重定向到正确的 URL 上。
+		if ( ! empty($topic->slug) && $topic->slug != $request->slug) {
+			return redirect($topic->link(), 301);
+		}
+
         return view('topics.show', compact('topic'));
     }
 
@@ -50,7 +59,7 @@ class TopicsController extends Controller
 		$topic->fill($request->all());
 		$topic->user_id = Auth::id();
 		$topic->save();
-		return redirect()->route('topics.show', $topic->id)->with('message', '帖子创建成功！.');
+		return redirect()->to($topic->link())->with('message', '帖子创建成功！.');
 	}
 
 	public function edit(Topic $topic)
@@ -65,7 +74,7 @@ class TopicsController extends Controller
 		$this->authorize('update', $topic);
 		$topic->update($request->all());
 
-		return redirect()->route('topics.show', $topic->id)->with('success', '更新成功！');
+		return redirect()->to($topic->link())->with('success', '更新成功！');
 	}
 
 	public function destroy(Topic $topic)
