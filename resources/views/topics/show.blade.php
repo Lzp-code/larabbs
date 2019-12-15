@@ -26,7 +26,7 @@
         </div>
 
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 topic-content">
-            <div class="card ">
+            <div class="card">
                 <div class="card-body">
                     <h1 class="text-center mt-3 mb-3">
                         {{ $topic->title }}
@@ -63,6 +63,16 @@
 
                 </div>
             </div>
+
+            {{-- 用户回复列表 --}}
+            <div class="card topic-reply mt-4">
+                <div class="card-body">
+                    {{--新增的两个子模板:_reply_box 回复框；_reply_list 用户回复列表。--}}
+                    @include('topics._reply_box', ['topic' => $topic])
+                    @include('topics._reply_list', ['replies' => $topic->replies()->with('user')->get()])
+                </div>
+            </div>
+
         </div>
     </div>
 @stop
