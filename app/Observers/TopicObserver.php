@@ -33,9 +33,9 @@ class TopicObserver
 
         // 如 slug 字段无内容，即使用翻译器对 title 进行翻译
         //app() 允许我们使用 Laravel 服务容器 ，此处我们用来生成 SlugTranslateHandler 实例。
-//        if(!$topic->slug){
-//            $topic->slug = app(SlugTranslateHandler::class)->translate($topic->title);
-//        }
+        if(!$topic->slug){
+            $topic->slug = app(SlugTranslateHandler::class)->translate($topic->title);
+        }
 
     }
 
