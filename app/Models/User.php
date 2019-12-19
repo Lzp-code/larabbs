@@ -44,15 +44,18 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
     public function notify($instance,$create_uid)
     {
-        var_dump($create_uid);
-        var_dump($instance);
+//        var_dump($create_uid);
+//        var_dump($instance);
 
-        $instance->user_id = $create_uid;
+//        var_dump($instance->reply->attributes);
+//        var_dump($instance->reply->attributes->user_id);
 
-        var_dump($instance);
-        exit();
+//        $instance->reply->attributes->user_id = $create_uid;
 
-        // 如果要通知的人是当前用户，就不必通知了！
+//        var_dump($instance);
+//        exit();
+
+        // 如果话题创建者是当前用户，就不必通知了！
         if ($create_uid == Auth::id()) {
             return;
         }
