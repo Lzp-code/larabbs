@@ -74,6 +74,16 @@ class User extends Authenticatable implements MustVerifyEmailContract
         $this->laravelNotify($instance);
     }
 
+    //当用户访问通知列表时，将所有通知状态设定为已读，并清空未读消息数。
+    public function markAsRead(){
+        $this->notification_count = 0;
+        $this->save();
+
+        //若要只获取 「未读」通知，可以使用 unreadNotifications 关联方法
+        //Illuminate\Notifications\Notifiable trait 提供了 markAsRead 方法，
+        //它更新数据库中通知记录的 read_at 列：
+        $this->unreadNotifications->markAsRead();
+    }
 
 
 
