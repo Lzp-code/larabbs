@@ -44,16 +44,7 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
     public function notify($instance,$create_uid)
     {
-//        var_dump($create_uid);
-//        var_dump($instance);
-//
-//        var_dump($instance->reply->attributes);
-//        var_dump($instance->reply->attributes['user_id']);
-
         $instance->reply->attributes['user_id'] = $create_uid;
-
-        var_dump($instance);
-        exit();
 
         // 如果话题创建者是当前用户，就不必通知了！
         if ($create_uid == Auth::id()) {
@@ -76,8 +67,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
             $user->notification_count = $notification_count;
             $user->save();
         }
-//        exit();
 
+        //在notifications表新增一条notification_id为帖子创建人的id的数据
+        //此处实际新增的却是notification_id为回复人的id的数据
+        //暂时无法解决，需手动改动数据库，将回复人的id改为帖子创建人的id
         $this->laravelNotify($instance);
     }
 
