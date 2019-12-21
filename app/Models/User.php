@@ -46,23 +46,38 @@ class User extends Authenticatable implements MustVerifyEmailContract
     {
 //        var_dump($create_uid);
 //        var_dump($instance);
-
+//
 //        var_dump($instance->reply->attributes);
-//        var_dump($instance->reply->attributes->user_id);
+//        var_dump($instance->reply->attributes['user_id']);
 
-//        $instance->reply->attributes->user_id = $create_uid;
+        $instance->reply->attributes['user_id'] = $create_uid;
 
-//        var_dump($instance);
-//        exit();
+        var_dump($instance);
+        exit();
 
         // 如果话题创建者是当前用户，就不必通知了！
         if ($create_uid == Auth::id()) {
             return;
         }
+
         // 只有数据库类型通知才需提醒，直接发送 Email 或者其他的都 Pass
+        //$instance是接收app\Observers\ReplyObserver传过来的app\Notifications\TopicReplied类
+        //method_exists—判断TopicReplied类里面是否有toDatabase方法
         if (method_exists($instance, 'toDatabase')) {
-            $this->increment('notification_count');
+
+            //uese表notification_count字段加一
+//            $this->increment('notification_count');
+
+
+            $user = User::where('id',$create_uid)->firstOrFail();//在数据库里找到与id与话题创建者id匹配的第一个用户
+
+            //被评论用户uese表notification_count字段加一
+            $notification_count  = $user->attributes['notification_count'] + 1;
+            $user->notification_count = $notification_count;
+            $user->save();
         }
+//        exit();
+
         $this->laravelNotify($instance);
     }
 
