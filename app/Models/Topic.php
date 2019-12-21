@@ -60,5 +60,12 @@ class Topic extends Model
         return $this->hasMany(Reply::class);
     }
 
+    //重新计算并保存评论数
+    public function updateReplyCount()
+    {
+        $this->reply_count = $this->replies->count();
+        $this->save();
+    }
+
 
 }

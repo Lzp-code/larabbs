@@ -27,4 +27,11 @@ class ReplyObserver
         $reply->content = clean($reply->content, 'user_topic_body');
     }
 
+
+    //回复被删除后，变更评论数
+    public function deleted(Reply $reply)
+    {
+        $reply->topic->updateReplyCount();
+    }
+
 }
