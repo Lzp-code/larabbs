@@ -28,7 +28,6 @@ class ReplyObserver
     }
 
 
-
     //回复被删除后，变更评论数
     public function deleted(Reply $reply)
     {

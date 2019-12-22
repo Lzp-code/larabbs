@@ -55,7 +55,6 @@ class TopicObserver
     }
 
 
-
     //当话题被删除的时，删除此话题下所有的回复
     public function deleted(Topic $topic){
         \DB::table('replies')->where('topic_id', $topic->id)->delete();
