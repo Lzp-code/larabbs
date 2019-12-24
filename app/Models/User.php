@@ -7,10 +7,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Auth;
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable implements MustVerifyEmailContract
 {
     //use以后，即可直接使用里面的方法
     use  MustVerifyEmailTrait;
+    use HasRoles;//权限管理扩展包
+
 
     //这里的意思是给 Notifiable 这个 trait 中的 notify 方法起一个别名 laravelNotify
     //同时访问控制为受保护的（protected ）。
